@@ -78,8 +78,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
               </TabsTrigger>
             ))}
           </TabsList>
-
-          {/* About Tab */}
           <TabsContent
             value="about"
             className="flex-1 space-y-4 text-sm text-gray-700 overflow-y-auto"
@@ -91,7 +89,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
               label="Abilities"
               value={pokemon.abilities.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
             />
-            <h2 className="mb-6 mt-10 text-xl font-bold">Breeding</h2>
+            <h2 className="mt-8 text-lg font-bold">Breeding</h2>
             <InfoRow
               label="Gender"
               value={
@@ -117,7 +115,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             />
             <InfoRow label="Egg Cycle" value={capitalizeFirstLetter(pokemon.eggCycle ?? '')} />
           </TabsContent>
-
           {/* Base Stats Tab */}
           <TabsContent
             value="base-stats"

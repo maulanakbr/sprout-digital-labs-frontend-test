@@ -39,7 +39,11 @@ export default function Page({ params }: PageProps) {
   };
 
   return (
-    <MainLayout headerClassName={getBackgroundColor} handleClick={handleClick}>
+    <MainLayout
+      headerClassName={getBackgroundColor}
+      buttonClassName="text-white"
+      handleClick={handleClick}
+    >
       {data && <PokemonDetails pokemon={data} />}
     </MainLayout>
   );

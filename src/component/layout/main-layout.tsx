@@ -6,6 +6,7 @@ interface MainLayoutProps {
   children: React.ReactNode;
   headerClassName?: string;
   mainClassName?: string;
+  buttonClassName?: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -13,6 +14,7 @@ export default function MainLayout({
   children,
   headerClassName,
   mainClassName,
+  buttonClassName,
   handleClick,
 }: MainLayoutProps) {
   return (
@@ -27,14 +29,14 @@ export default function MainLayout({
           variant="ghost"
           rightIcon="arrow-left"
           rightIconSize={32}
-          className="p-0 hover:p-4 cursor-pointer"
+          className={cn('p-0 hover:p-4 cursor-pointer', buttonClassName)}
           onClick={typeof handleClick === 'function' ? handleClick : undefined}
         />
         <Button
           variant="ghost"
           rightIcon="menu"
           rightIconSize={32}
-          className="p-0 hover:p-4 cursor-pointer"
+          className={cn('p-0 hover:p-4 cursor-pointer', buttonClassName)}
         />
       </header>
       <main className={cn('flex-1 max-w-screen-md mx-auto w-full', mainClassName)}>{children}</main>
