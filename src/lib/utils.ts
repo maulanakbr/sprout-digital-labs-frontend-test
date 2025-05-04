@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { typeEffectiveness } from './type-effectiveness';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -55,4 +56,21 @@ export function getPokemonTypeClass(types: string[]): string {
   if (types.includes('psychic') || types.includes('fairy')) return 'bg-purple-400';
 
   return 'bg-white';
+}
+
+export function calculateTypeDefenses(types: string[]): Record<string, number> {
+  const result: Record<string, number> = {};
+
+  for (const attacker in typeEffectiveness) {
+    let multiplier = 1;
+
+    for (const defender of types) {
+      const typeEffect = typeEffectiveness[attacker]?.[defender] ?? 1;
+      multiplier *= typeEffect;
+    }
+
+    result[attacker] = multiplier;
+  }
+
+  return result;
 }

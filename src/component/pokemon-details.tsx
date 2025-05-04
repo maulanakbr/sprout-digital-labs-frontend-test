@@ -1,7 +1,7 @@
 'use client';
 
 import type { PokemonDetails } from '@/lib/schemas/pokemon-details-schema';
-import { capitalizeFirstLetter, cn, getPokemonTypeClass } from '@/lib/utils';
+import { calculateTypeDefenses, capitalizeFirstLetter, cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import Icon from './icon';
@@ -25,8 +25,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   }
 
   const pokemonWeight = `${(pokemon.weight * 0.1 * 2.20462).toFixed(1)} lbs (${(pokemon.weight * 0.1).toFixed(1)} kg)`;
-
-  console.log('PKKK', pokemon);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100">
@@ -151,6 +149,17 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             <p className="font-medium text-gray-400">
               The effectiveness of each type on {capitalizeFirstLetter(pokemon.name)}
             </p>
+            <div className="grid grid-cols-3 gap-3 mt-4">
+              {Object.entries(calculateTypeDefenses(pokemon.types)).map(([type, multiplier]) => (
+                <div
+                  key={type}
+                  className="flex justify-between items-center px-4 py-2 rounded-md shadow-sm bg-gray-50"
+                >
+                  <span className="capitalize">{type}</span>
+                  <span className="font-bold">{multiplier}x</span>
+                </div>
+              ))}
+            </div>
           </TabsContent>
           <TabsContent
             value="evolution"

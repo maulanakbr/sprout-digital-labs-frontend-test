@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 interface BaseStatRowProps {
   label: string;
   value: number;
@@ -9,6 +11,15 @@ export default function BaseStatRow({ label, value, isTotal = false }: BaseStatR
   const percent = Math.min((value / max) * 100, 100);
 
   const barColor = isTotal ? 'bg-purple-600 font-bold' : value > 60 ? 'bg-green-500' : 'bg-red-500';
+
+  const [animatedWidth, setAnimatedWidth] = React.useState(0);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAnimatedWidth(percent);
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [percent]);
 
   return (
     <div className="w-full">
@@ -23,7 +34,10 @@ export default function BaseStatRow({ label, value, isTotal = false }: BaseStatR
         </span>
       </div>
       <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-        <div className={`h-full ${barColor} transition-all`} style={{ width: `${percent}%` }} />
+        <div
+          className={`h-full ${barColor} transition-all duration-700 ease-out`}
+          style={{ width: `${animatedWidth}%` }}
+        />
       </div>
     </div>
   );
