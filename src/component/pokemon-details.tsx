@@ -7,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import Icon from './icon';
 import * as React from 'react';
 import { PokemonDetailsAboutSkeleton } from './skeleton/pokemon-details-about-skeleton';
+import ContentNotAvailable from './misc/content-not-available';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
@@ -146,12 +147,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             value="moves"
             className="flex-1 space-y-2 text-sm text-gray-700 overflow-y-auto"
           >
-            {/* Uncomment and map your moves here */}
-            {/* {pokemon.moves.map((move) => (
-              <span key={move} className="block">
-                {move}
-              </span>
-            ))} */}
+            <ContentNotAvailable />
           </TabsContent>
         </Tabs>
       </div>

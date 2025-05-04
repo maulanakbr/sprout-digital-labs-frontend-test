@@ -83,6 +83,7 @@ export const pokemonSpeciesSchema = z.object({
   eggGroups: z.array(namedAPIResourceSchema),
   evolvesFromSpecies: namedAPIResourceSchema,
   habitat: namedAPIResourceSchema,
+  shape: namedAPIResourceSchema,
 });
 
 export const pokemonDetailsFromApiSchema = z.object({
