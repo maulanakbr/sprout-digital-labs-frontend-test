@@ -2,7 +2,7 @@ import type { PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PokemonListState {
-  pokemons: PokemonListWithDetails;
+  pokemons: PokemonListWithDetails[];
 }
 
 const initialState: PokemonListState = {
@@ -13,7 +13,7 @@ export const pokemonListSlice = createSlice({
   name: 'pokemonList',
   initialState,
   reducers: {
-    appendPokemons: (state, action: PayloadAction<PokemonListWithDetails>) => {
+    appendPokemons: (state, action: PayloadAction<PokemonListWithDetails[]>) => {
       const newOnes = action.payload.filter(
         (newPoke) => !state.pokemons.some((p) => p.id === newPoke.id)
       );

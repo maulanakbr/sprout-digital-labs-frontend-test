@@ -12,7 +12,7 @@ import LoadingSpinner from '@/component/misc/loading-spinner';
 
 const LIMIT = 20;
 
-export default function PokemonList() {
+export default function Page() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state: RootState) => state.pokemonList.pokemons);
   const [offset, setOffset] = React.useState(0);
@@ -46,7 +46,8 @@ export default function PokemonList() {
           </>
         )}
 
-        {pokemons.length > 0 && <PokemonCard pokemons={pokemons} />}
+        {pokemons.length > 0 &&
+          pokemons.map((pokemon) => <PokemonCard pokemon={pokemon} key={pokemon.name} />)}
 
         {!isLoading && pokemons.length === 0 && (
           <div className="col-span-2 text-center text-gray-500">No Pokémon found.</div>

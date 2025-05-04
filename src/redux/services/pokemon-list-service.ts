@@ -12,7 +12,7 @@ const pokemonListApi = createApi({
   refetchOnMountOrArgChange: true,
   keepUnusedDataFor: 259200,
   endpoints: (builder) => ({
-    getPokemonList: builder.query<PokemonListWithDetails, BaseRequest>({
+    getPokemonList: builder.query<PokemonListWithDetails[], BaseRequest>({
       async queryFn(arg, _queryApi, _extraOptions, fetchWithBQ) {
         const listResponse = await fetchWithBQ(`/pokemon?limit=${arg.limit}&offset=${arg.offset}`);
         if (listResponse.error) return { error: listResponse.error };
@@ -46,7 +46,7 @@ const pokemonListApi = createApi({
           })
         );
 
-        return { data: results.filter(Boolean) as PokemonListWithDetails };
+        return { data: results.filter(Boolean) as PokemonListWithDetails[] };
       },
     }),
   }),

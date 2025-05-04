@@ -3,10 +3,10 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 interface PokemonCardProps {
-  pokemons: PokemonListWithDetails;
+  pokemon: PokemonListWithDetails;
 }
 
-export default function PokemonCard({ pokemons }: PokemonCardProps) {
+export default function PokemonCard({ pokemon }: PokemonCardProps) {
   function getPokemonTypeClass(types: string[]): string {
     if (types.includes('fire') || types.includes('dragon') || types.includes('fighting'))
       return 'bg-red-400';
@@ -23,42 +23,41 @@ export default function PokemonCard({ pokemons }: PokemonCardProps) {
     return 'bg-white';
   }
 
+  const handleClick = () => {};
+
   return (
-    <>
-      {pokemons.map((pokemon) => (
-        <div
-          key={pokemon.id}
-          className={cn(
-            'p-6 rounded-2xl shadow-md flex items-center justify-between gap-6 transition-transform hover:scale-[1.01]',
-            getPokemonTypeClass(pokemon.types)
-          )}
-        >
-          <div className="flex flex-col gap-2 max-w-sm">
-            <h3 className="text-xl text-white font-bold capitalize">{pokemon.name}</h3>
-            <div className="flex flex-wrap gap-2">
-              {pokemon.types.map((type) => (
-                <span
-                  key={type}
-                  className="text-xs px-3 py-1 rounded-full bg-white/30 text-white font-medium capitalize backdrop-blur-sm"
-                >
-                  {type}
-                </span>
-              ))}
-            </div>
-          </div>
-          {pokemon.image && (
-            <div className="flex-shrink-0 w-28 h-28 relative">
-              <Image
-                src={pokemon.image}
-                alt={pokemon.name}
-                fill
-                className="object-contain"
-                sizes="112px"
-              />
-            </div>
-          )}
+    <div
+      key={pokemon.id}
+      className={cn(
+        'p-6 rounded-2xl shadow-md flex items-center justify-between gap-6 transition-transform hover:scale-[1.01]',
+        getPokemonTypeClass(pokemon.types)
+      )}
+      onClick={handleClick}
+    >
+      <div className="flex flex-col gap-2 max-w-sm">
+        <h3 className="text-xl text-white font-bold capitalize">{pokemon.name}</h3>
+        <div className="flex flex-wrap gap-2">
+          {pokemon.types.map((type) => (
+            <span
+              key={type}
+              className="text-xs px-3 py-1 rounded-full bg-white/30 text-white font-medium capitalize backdrop-blur-sm"
+            >
+              {type}
+            </span>
+          ))}
         </div>
-      ))}
-    </>
+      </div>
+      {pokemon.image && (
+        <div className="flex-shrink-0 w-28 h-28 relative">
+          <Image
+            src={pokemon.image}
+            alt={pokemon.name}
+            fill
+            className="object-contain"
+            sizes="112px"
+          />
+        </div>
+      )}
+    </div>
   );
 }
