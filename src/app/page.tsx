@@ -35,28 +35,31 @@ export default function PokemonList() {
   if (error) return <div className="text-red-500">Error loading Pokémon</div>;
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {isLoading && (
-        <>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <PokemonCardSkeleton key={i} />
-          ))}
-        </>
-      )}
-
-      {!isLoading && pokemons.length > 0 && <PokemonCard pokemons={pokemons} />}
-
-      {!isLoading && pokemons.length === 0 && (
-        <div className="col-span-2 text-center text-gray-500">No Pokémon found.</div>
-      )}
-
-      <div ref={observerRef} className="col-span-2 text-center py-6">
-        {isFetching && !isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <span className="text-sm text-gray-500">Scroll to load more</span>
+    <>
+      <h2 className="mb-4 text-4xl font-bold">Pokedex</h2>
+      <div className="grid grid-cols-2 gap-10">
+        {isLoading && pokemons.length === 0 && (
+          <>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <PokemonCardSkeleton key={i} />
+            ))}
+          </>
         )}
+
+        {pokemons.length > 0 && <PokemonCard pokemons={pokemons} />}
+
+        {!isLoading && pokemons.length === 0 && (
+          <div className="col-span-2 text-center text-gray-500">No Pokémon found.</div>
+        )}
+
+        <div ref={observerRef} className="col-span-2 text-center py-6">
+          {isFetching && !isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <span className="text-sm text-gray-500">Scroll to load more</span>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

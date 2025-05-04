@@ -1,5 +1,6 @@
 import type { PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface PokemonCardProps {
   pokemons: PokemonListWithDetails;
@@ -7,14 +8,18 @@ interface PokemonCardProps {
 
 export default function PokemonCard({ pokemons }: PokemonCardProps) {
   function getPokemonTypeClass(types: string[]): string {
-    if (types.includes('fire') || types.includes('dragon')) return 'bg-red-300';
-    if (types.includes('water') || types.includes('ice')) return 'bg-blue-300';
-    if (types.includes('flying')) return 'bg-sky-200';
-    if (types.includes('electric')) return 'bg-amber-200';
-    if (types.includes('ground')) return 'bg-orange-300';
-    if (types.includes('dark') || types.includes('ghost')) return 'bg-neutral-500';
-    if (types.includes('rock') || types.includes('steel')) return 'bg-gray-300';
-    if (types.includes('grass') || types.includes('poison')) return 'bg-emerald-300';
+    if (types.includes('fire') || types.includes('dragon') || types.includes('fighting'))
+      return 'bg-red-400';
+    if (types.includes('water') || types.includes('ice')) return 'bg-blue-400';
+    if (types.includes('flying')) return 'bg-sky-300';
+    if (types.includes('electric') || types.includes('normal')) return 'bg-amber-300';
+    if (types.includes('ground')) return 'bg-orange-400';
+    if (types.includes('dark') || types.includes('ghost')) return 'bg-neutral-600';
+    if (types.includes('rock') || types.includes('steel')) return 'bg-gray-400';
+    if (types.includes('grass') || types.includes('poison') || types.includes('bug'))
+      return 'bg-emerald-400';
+    if (types.includes('psychic') || types.includes('fairy')) return 'bg-purple-400';
+
     return 'bg-white';
   }
 
@@ -23,21 +28,35 @@ export default function PokemonCard({ pokemons }: PokemonCardProps) {
       {pokemons.map((pokemon) => (
         <div
           key={pokemon.id}
-          className={cn('p-4 rounded shadow-md', getPokemonTypeClass(pokemon.types))}
+          className={cn(
+            'p-6 rounded-2xl shadow-md flex items-center justify-between gap-6 transition-transform hover:scale-[1.01]',
+            getPokemonTypeClass(pokemon.types)
+          )}
         >
-          <img
-            src={pokemon.image as string}
-            alt={pokemon.name}
-            className="w-full h-32 object-contain"
-          />
-          <h3 className="text-lg font-semibold capitalize">{pokemon.name}</h3>
-          <div className="flex gap-2 mt-1">
-            {pokemon.types.map((type) => (
-              <span key={type} className="text-sm px-2 py-0.5 rounded bg-gray-200 text-gray-800">
-                {type}
-              </span>
-            ))}
+          <div className="flex flex-col gap-2 max-w-sm">
+            <h3 className="text-xl text-white font-bold capitalize">{pokemon.name}</h3>
+            <div className="flex flex-wrap gap-2">
+              {pokemon.types.map((type) => (
+                <span
+                  key={type}
+                  className="text-xs px-3 py-1 rounded-full bg-white/30 text-white font-medium capitalize backdrop-blur-sm"
+                >
+                  {type}
+                </span>
+              ))}
+            </div>
           </div>
+          {pokemon.image && (
+            <div className="flex-shrink-0 w-28 h-28 relative">
+              <Image
+                src={pokemon.image}
+                alt={pokemon.name}
+                fill
+                className="object-contain"
+                sizes="112px"
+              />
+            </div>
+          )}
         </div>
       ))}
     </>
