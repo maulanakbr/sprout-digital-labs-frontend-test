@@ -5,9 +5,6 @@ export const pokemonDetailSchema = z.object({
   name: z.string(),
   sprites: z.object({
     other: z.object({
-      // 'official-artwork': z.object({
-      //   front_default: z.string().nullable(),
-      // }),
       officialArtwork: z.object({
         frontDefault: z.string().nullable(),
       }),

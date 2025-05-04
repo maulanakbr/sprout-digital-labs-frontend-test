@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetPokemonListQuery } from '@/redux/services/pokemon-list';
+import { useGetPokemonListQuery } from '@/redux/services/pokemon-list-service';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { appendPokemons } from '@/redux/slices/pokemon-list-slice';
 import type { RootState } from '@/redux/store';
