@@ -8,6 +8,8 @@ import Icon from './icon';
 import * as React from 'react';
 import { PokemonDetailsAboutSkeleton } from './skeleton/pokemon-details-about-skeleton';
 import ContentNotAvailable from './misc/content-not-available';
+import InfoRow from './rows/info-row';
+import BaseStatRow from './rows/base-stat-row';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
@@ -23,6 +25,8 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   }
 
   const pokemonWeight = `${(pokemon.weight * 0.1 * 2.20462).toFixed(1)} lbs (${(pokemon.weight * 0.1).toFixed(1)} kg)`;
+
+  console.log('PKKK', pokemon);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100">
@@ -62,8 +66,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           </div>
         )}
       </div>
-
-      {/* Tabs Section */}
       <div className="flex-1 flex flex-col">
         <Tabs
           defaultValue="about"
@@ -123,25 +125,39 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
               </>
             )}
           </TabsContent>
-          {/* Base Stats Tab */}
           <TabsContent
             value="base-stats"
             className="flex-1 space-y-3 text-sm text-gray-700 overflow-y-auto"
           >
-            {/* Uncomment and map your base stats here */}
-            {/* {pokemon.baseStats.map((stat) => (
-              <InfoRow key={stat.name} label={stat.name} value={stat.value.toString()} />
-            ))} */}
+            {pokemon.stats.map((p) => (
+              <BaseStatRow
+                label={
+                  p.stat === 'special-attack'
+                    ? 'Sp. Atk'
+                    : p.stat === 'special-defense'
+                      ? 'Sp. Def'
+                      : p.stat
+                }
+                value={p.baseStat}
+                key={p.stat}
+              />
+            ))}
+            <BaseStatRow
+              label="Total"
+              value={pokemon.stats.reduce((acc, cur) => acc + cur.baseStat, 0)}
+              isTotal
+            />
+            <h2 className="mt-8 text-lg font-bold">Type Defenses</h2>
+            <p className="font-medium text-gray-400">
+              The effectiveness of each type on {capitalizeFirstLetter(pokemon.name)}
+            </p>
           </TabsContent>
-
-          {/* Evolution Tab */}
           <TabsContent
             value="evolution"
             className="flex-1 space-y-3 text-sm text-gray-700 overflow-y-auto"
           >
-            <InfoRow label="Evolution" value={pokemon.evolution} />
+            <ContentNotAvailable />
           </TabsContent>
-
           {/* Moves Tab */}
           <TabsContent
             value="moves"
@@ -151,15 +167,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
-}
-
-function InfoRow({ label, value }: { label: string; value?: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-[120px_1fr] w-full gap-4">
-      <span className="font-medium text-gray-400">{label}</span>
-      <span className="text-gray-900">{value || '-'}</span>
     </div>
   );
 }
