@@ -1,9 +1,10 @@
 'use client';
 
 import type { PokemonDetails } from '@/lib/schemas/pokemon-details-schema';
-import { cn } from '@/lib/utils';
+import { cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
+import MainLayout from './layout/main-layout';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
@@ -12,7 +13,9 @@ interface PokemonDetailsProps {
 export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
-      <div className={cn('relative pt-8 pb-4 px-6 rounded-b-3xl', getTypeColor(pokemon.types))}>
+      <div
+        className={cn('relative pt-8 pb-4 px-6 rounded-b-3xl', getPokemonTypeClass(pokemon.types))}
+      >
         <div className="flex justify-between items-start">
           <h1 className="text-3xl font-bold text-white capitalize">{pokemon.name}</h1>
           <span className="text-white text-lg font-medium">
@@ -60,9 +63,9 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           <div>
             <span className="font-semibold">Weight:</span> {pokemon.weight}
           </div>
-          <div>
+          {/* <div>
             <span className="font-semibold">Abilities:</span> {pokemon.abilities.join(', ')}
-          </div>
+          </div> */}
           {/* <div className="pt-2 border-t">
             <span className="font-semibold">Gender:</span> ♂ {pokemon.genderRatio.male}% ♀{' '}
             {pokemon.genderRatio.female}%
@@ -100,15 +103,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
       </Tabs>
     </div>
   );
-}
-
-function getTypeColor(types: string[]) {
-  if (types.includes('grass')) return 'bg-emerald-400';
-  if (types.includes('fire')) return 'bg-red-400';
-  if (types.includes('water')) return 'bg-blue-400';
-  if (types.includes('electric')) return 'bg-amber-300';
-  if (types.includes('psychic')) return 'bg-purple-400';
-  return 'bg-gray-200';
 }
 
 // Utility to capitalize tab names

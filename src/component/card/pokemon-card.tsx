@@ -1,7 +1,7 @@
 'use client';
 
 import type { PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
-import { cn } from '@/lib/utils';
+import { cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,22 +10,6 @@ interface PokemonCardProps {
 }
 
 export default function PokemonCard({ pokemon }: PokemonCardProps) {
-  function getPokemonTypeClass(types: string[]): string {
-    if (types.includes('fire') || types.includes('dragon') || types.includes('fighting'))
-      return 'bg-red-400';
-    if (types.includes('water') || types.includes('ice')) return 'bg-blue-400';
-    if (types.includes('flying')) return 'bg-sky-300';
-    if (types.includes('electric') || types.includes('normal')) return 'bg-amber-300';
-    if (types.includes('ground')) return 'bg-orange-400';
-    if (types.includes('dark') || types.includes('ghost')) return 'bg-neutral-600';
-    if (types.includes('rock') || types.includes('steel')) return 'bg-gray-400';
-    if (types.includes('grass') || types.includes('poison') || types.includes('bug'))
-      return 'bg-emerald-400';
-    if (types.includes('psychic') || types.includes('fairy')) return 'bg-purple-400';
-
-    return 'bg-white';
-  }
-
   return (
     <Link
       className={cn(

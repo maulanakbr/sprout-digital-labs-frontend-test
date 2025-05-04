@@ -9,6 +9,7 @@ import type { RootState } from '@/redux/store';
 import PokemonCard from '@/component/card/pokemon-card';
 import PokemonCardSkeleton from '@/component/skeleton/pokemon-card-skeleton';
 import LoadingSpinner from '@/component/misc/loading-spinner';
+import MainLayout from '@/component/layout/main-layout';
 
 const LIMIT = 20;
 
@@ -35,7 +36,7 @@ export default function Page() {
   if (error) return <div className="text-red-500">Error loading Pokémon</div>;
 
   return (
-    <>
+    <MainLayout mainClassName="p-4">
       <h2 className="mb-4 text-4xl font-bold">Pokedex</h2>
       <div className="grid grid-cols-2 gap-10">
         {isLoading && pokemons.length === 0 && (
@@ -61,6 +62,6 @@ export default function Page() {
           )}
         </div>
       </div>
-    </>
+    </MainLayout>
   );
 }
