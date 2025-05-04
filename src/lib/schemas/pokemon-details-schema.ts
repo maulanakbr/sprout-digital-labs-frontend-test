@@ -80,6 +80,9 @@ export const pokemonSpeciesSchema = z.object({
   id: z.number(),
   name: z.string(),
   genderRate: z.number(),
+  eggGroups: z.array(namedAPIResourceSchema),
+  evolvesFromSpecies: namedAPIResourceSchema,
+  habitat: namedAPIResourceSchema,
 });
 
 export const pokemonDetailsFromApiSchema = z.object({
@@ -130,8 +133,8 @@ export const pokemonDetailsSchema = z.object({
     })
     .optional(),
   species: z.string(),
-  eggGroup: z.string().optional(),
-  eggCycle: z.string().optional(),
+  eggGroups: z.array(z.string()),
+  eggCycle: z.string(),
   evolution: z.string().optional(),
   moves: z.array(z.string()).optional(),
 });

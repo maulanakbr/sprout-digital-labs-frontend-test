@@ -4,15 +4,26 @@ import type { PokemonDetails } from '@/lib/schemas/pokemon-details-schema';
 import { capitalizeFirstLetter, cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
+import Icon from './icon';
+import * as React from 'react';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
 }
 
 export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
+  function formatHeight(heightDm: number) {
+    const cm = heightDm * 10;
+    const totalInches = cm / 2.54;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+    return `${feet}'${inches}" (${cm.toFixed(2)} cm)`;
+  }
+
+  const pokemonWeight = `${(pokemon.weight * 0.1 * 2.20462).toFixed(1)} lbs (${(pokemon.weight * 0.1).toFixed(1)} kg)`;
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100">
-      {/* Header Section */}
       <div
         className={cn(
           'relative pt-10 pb-6 px-6 rounded-b-3xl shadow-md',
@@ -54,7 +65,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
       <div className="flex-1 flex flex-col">
         <Tabs
           defaultValue="about"
-          className="relative z-10 flex-1 flex flex-col bg-white rounded-t-3xl -mt-24 px-6 py-16"
+          className="relative z-10 flex-1 shadow-md flex flex-col bg-white rounded-t-3xl -mt-24 px-6 py-16"
         >
           <TabsList className="w-full flex justify-between border-b border-gray-200">
             {['about', 'base-stats', 'evolution', 'moves'].map((tab) => (
@@ -73,17 +84,38 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             value="about"
             className="flex-1 space-y-4 text-sm text-gray-700 overflow-y-auto"
           >
-            <InfoRow label="Species" value={pokemon.species} />
-            <InfoRow label="Height" value={`${pokemon.height} dm`} />
-            <InfoRow label="Weight" value={`${pokemon.weight} hg`} />
+            <InfoRow label="Species" value={capitalizeFirstLetter(pokemon.species ?? '')} />
+            <InfoRow label="Height" value={formatHeight(pokemon.height)} />
+            <InfoRow label="Weight" value={pokemonWeight} />
             <InfoRow
               label="Abilities"
-              value={pokemon.abilities.map((p) => capitalizeFirstLetter(p)).join(', ')}
+              value={pokemon.abilities.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
             />
             <h2 className="mb-6 mt-10 text-xl font-bold">Breeding</h2>
-            <InfoRow label="Gender" value={pokemon.genderRatio?.male as number} />
-            <InfoRow label="Egg Group" value={pokemon.eggGroup} />
-            <InfoRow label="Egg Cycle" value={pokemon.eggCycle} />
+            <InfoRow
+              label="Gender"
+              value={
+                pokemon.genderRatio ? (
+                  <div className="flex items-center gap-4">
+                    <span className="flex items-center gap-1">
+                      <Icon variants="male" size={16} className="text-blue-600" />
+                      {pokemon.genderRatio.male}%
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Icon variants="female" size={16} className="text-pink-600" />
+                      {pokemon.genderRatio.female}%
+                    </span>
+                  </div>
+                ) : (
+                  'Genderless'
+                )
+              }
+            />
+            <InfoRow
+              label="Egg Groups"
+              value={pokemon.eggGroups?.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
+            />
+            <InfoRow label="Egg Cycle" value={capitalizeFirstLetter(pokemon.eggCycle ?? '')} />
           </TabsContent>
 
           {/* Base Stats Tab */}
@@ -123,7 +155,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   );
 }
 
-function InfoRow({ label, value }: { label: string; value?: string | number }) {
+function InfoRow({ label, value }: { label: string; value?: React.ReactNode }) {
   return (
     <div className="grid grid-cols-[120px_1fr] w-full gap-4">
       <span className="font-medium text-gray-400">{label}</span>

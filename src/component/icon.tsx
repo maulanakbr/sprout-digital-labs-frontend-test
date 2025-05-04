@@ -1,9 +1,11 @@
 import { cn } from '@/lib/utils';
-import { LucideProps, ArrowLeftIcon, MenuIcon } from 'lucide-react';
+import { type LucideProps, ArrowLeftIcon, MenuIcon, Mars, Venus } from 'lucide-react';
 
 const iconVariants = {
   'arrow-left': ArrowLeftIcon,
   menu: MenuIcon,
+  male: Mars,
+  female: Venus,
 };
 
 export type IconVariant = keyof typeof iconVariants;
