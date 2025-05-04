@@ -1,7 +1,7 @@
 'use client';
 
 import type { PokemonDetails } from '@/lib/schemas/pokemon-details-schema';
-import { cn, getPokemonTypeClass } from '@/lib/utils';
+import { capitalizeFirstLetter, cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 
@@ -30,7 +30,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           {pokemon.types.map((type) => (
             <span
               key={type}
-              className="bg-white/30 px-3 py-1 text-white text-sm rounded-full capitalize backdrop-blur-sm"
+              className="bg-white/30 px-3 py-1 text-white text-sm rounded-full backdrop-blur-sm"
             >
               {type}
             </span>
@@ -63,7 +63,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
                 value={tab}
                 className="flex-1 text-center pb-2 text-sm font-semibold text-gray-600 border-b-2 border-transparent transition-all hover:border-gray-300"
               >
-                {capitalizeTabName(tab)}
+                {capitalizeFirstLetter(tab)}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -76,8 +76,12 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             <InfoRow label="Species" value={pokemon.species} />
             <InfoRow label="Height" value={`${pokemon.height} dm`} />
             <InfoRow label="Weight" value={`${pokemon.weight} hg`} />
-            <InfoRow label="Abilities" value={pokemon.abilities.join(', ')} />
-            <InfoRow label="Gender" value={pokemon.gender} />
+            <InfoRow
+              label="Abilities"
+              value={pokemon.abilities.map((p) => capitalizeFirstLetter(p)).join(', ')}
+            />
+            <h2 className="mb-6 mt-10 text-xl font-bold">Breeding</h2>
+            <InfoRow label="Gender" value={pokemon.genderRatio?.male as number} />
             <InfoRow label="Egg Group" value={pokemon.eggGroup} />
             <InfoRow label="Egg Cycle" value={pokemon.eggCycle} />
           </TabsContent>
@@ -119,20 +123,11 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   );
 }
 
-// Capitalizes tab names like 'base-stats' → 'Base Stats'
-function capitalizeTabName(tabName: string) {
-  return tabName
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-// Simple reusable row component
-function InfoRow({ label, value }: { label: string; value: string | number }) {
+function InfoRow({ label, value }: { label: string; value?: string | number }) {
   return (
-    <div className="flex items-center justify-between pb-2">
-      <span className="font-medium text-gray-500">{label}</span>
-      <span className="text-gray-800">{value}</span>
+    <div className="grid grid-cols-[120px_1fr] w-full gap-4">
+      <span className="font-medium text-gray-400">{label}</span>
+      <span className="text-gray-900">{value || '-'}</span>
     </div>
   );
 }

@@ -76,6 +76,12 @@ const pokemonPastTypesSchema = z.object({
   generation: namedAPIResourceSchema,
 });
 
+export const pokemonSpeciesSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  genderRate: z.number(),
+});
+
 export const pokemonDetailsFromApiSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -116,18 +122,20 @@ export const pokemonDetailsSchema = z.object({
       baseStat: z.number(),
     })
   ),
-  abilities: z.array(z.string()).optional(),
+  abilities: z.array(z.string()),
   genderRatio: z
     .object({
       male: z.number(),
       female: z.number(),
     })
     .optional(),
+  species: z.string(),
   eggGroup: z.string().optional(),
   eggCycle: z.string().optional(),
   evolution: z.string().optional(),
   moves: z.array(z.string()).optional(),
 });
 
+export type PokemonSpecies = z.infer<typeof pokemonSpeciesSchema>;
 export type PokemonDetailsFromApi = z.infer<typeof pokemonDetailsFromApiSchema>;
 export type PokemonDetails = z.infer<typeof pokemonDetailsSchema>;

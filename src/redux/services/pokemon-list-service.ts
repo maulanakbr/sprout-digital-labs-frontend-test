@@ -36,14 +36,12 @@ const pokemonListApi = createApi({
             const detailJson = transformResponse(await detailRes.json());
 
             const parsedDetail = pokemonDetailsFromApiSchema.safeParse(detailJson);
-            if (!parsedDetail.success) {
-              return null;
-            }
+            if (!parsedDetail.success) return null;
 
             return {
               id: parsedDetail.data.id,
               name: parsedDetail.data.name,
-              image: parsedDetail.data.sprites.other['officialArtwork'].frontDefault,
+              image: parsedDetail.data.sprites.other['officialArtwork']?.frontDefault,
               types: parsedDetail.data.types.map((t) => t.type.name),
             };
           })

@@ -34,6 +34,13 @@ export function transformResponse<T>(response: T, type: 'response' | 'params' = 
   return response;
 }
 
+export function capitalizeFirstLetter(letter: string) {
+  return letter
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 export function getPokemonTypeClass(types: string[]): string {
   if (types.includes('fire') || types.includes('dragon') || types.includes('fighting'))
     return 'bg-red-400';
