@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
