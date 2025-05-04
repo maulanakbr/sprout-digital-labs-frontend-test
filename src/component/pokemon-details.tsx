@@ -4,7 +4,6 @@ import type { PokemonDetails } from '@/lib/schemas/pokemon-details-schema';
 import { cn, getPokemonTypeClass } from '@/lib/utils';
 import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
-import MainLayout from './layout/main-layout';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
@@ -12,18 +11,22 @@ interface PokemonDetailsProps {
 
 export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100">
+      {/* Header Section */}
       <div
-        className={cn('relative pt-8 pb-4 px-6 rounded-b-3xl', getPokemonTypeClass(pokemon.types))}
+        className={cn(
+          'relative pt-10 pb-6 px-6 rounded-b-3xl shadow-md',
+          getPokemonTypeClass(pokemon.types)
+        )}
       >
         <div className="flex justify-between items-start">
-          <h1 className="text-3xl font-bold text-white capitalize">{pokemon.name}</h1>
-          <span className="text-white text-lg font-medium">
+          <h1 className="text-4xl font-bold text-white capitalize">{pokemon.name}</h1>
+          <span className="text-white text-xl font-semibold">
             #{pokemon.id.toString().padStart(3, '0')}
           </span>
         </div>
 
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-wrap gap-2 mt-3">
           {pokemon.types.map((type) => (
             <span
               key={type}
@@ -33,82 +36,103 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             </span>
           ))}
         </div>
-
         {pokemon.image && (
-          <div className="relative w-full h-44 mt-4">
-            <Image src={pokemon.image} alt={pokemon.name} fill className="object-contain" />
+          <div className="relative z-20 flex justify-center -mt-20">
+            <div className="w-[470px] h-[470px]">
+              <Image
+                src={pokemon.image}
+                alt={pokemon.name}
+                fill
+                className="object-contain drop-shadow-xl"
+              />
+            </div>
           </div>
         )}
       </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue="about" className="bg-white rounded-t-3xl -mt-6 px-6 py-4">
-        <TabsList className="flex gap-6 border-b mb-4">
-          {['about', 'base-stats', 'evolution', 'moves'].map((tab) => (
-            <TabsTrigger
-              key={tab}
-              value={tab}
-              className="pb-2 text-sm font-semibold text-gray-600 border-b-2 border-transparent hover:border-gray-400"
-            >
-              {capitalizeTabName(tab)}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      {/* Tabs Section */}
+      <div className="flex-1 flex flex-col">
+        <Tabs
+          defaultValue="about"
+          className="relative z-10 flex-1 flex flex-col bg-white rounded-t-3xl -mt-24 px-6 py-16"
+        >
+          <TabsList className="w-full flex justify-between border-b border-gray-200">
+            {['about', 'base-stats', 'evolution', 'moves'].map((tab) => (
+              <TabsTrigger
+                key={tab}
+                value={tab}
+                className="flex-1 text-center pb-2 text-sm font-semibold text-gray-600 border-b-2 border-transparent transition-all hover:border-gray-300"
+              >
+                {capitalizeTabName(tab)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-        <TabsContent value="about" className="space-y-3 text-sm text-gray-700">
-          <div>{/* <span className="font-semibold">Species:</span> {pokemon.species} */}</div>
-          <div>
-            <span className="font-semibold">Height:</span> {pokemon.height}
-          </div>
-          <div>
-            <span className="font-semibold">Weight:</span> {pokemon.weight}
-          </div>
-          {/* <div>
-            <span className="font-semibold">Abilities:</span> {pokemon.abilities.join(', ')}
-          </div> */}
-          {/* <div className="pt-2 border-t">
-            <span className="font-semibold">Gender:</span> ♂ {pokemon.genderRatio.male}% ♀{' '}
-            {pokemon.genderRatio.female}%
-          </div> */}
-          <div>
-            <span className="font-semibold">Egg Group:</span> {pokemon.eggGroup}
-          </div>
-          <div>
-            <span className="font-semibold">Egg Cycle:</span> {pokemon.eggCycle}
-          </div>
-        </TabsContent>
+          {/* About Tab */}
+          <TabsContent
+            value="about"
+            className="flex-1 space-y-4 text-sm text-gray-700 overflow-y-auto"
+          >
+            <InfoRow label="Species" value={pokemon.species} />
+            <InfoRow label="Height" value={`${pokemon.height} dm`} />
+            <InfoRow label="Weight" value={`${pokemon.weight} hg`} />
+            <InfoRow label="Abilities" value={pokemon.abilities.join(', ')} />
+            <InfoRow label="Gender" value={pokemon.gender} />
+            <InfoRow label="Egg Group" value={pokemon.eggGroup} />
+            <InfoRow label="Egg Cycle" value={pokemon.eggCycle} />
+          </TabsContent>
 
-        <TabsContent value="base-stats" className="space-y-3 text-sm text-gray-700">
-          {/* Example of rendering base stats */}
-          {/* {pokemon.baseStats.map((stat) => (
-            <div key={stat.name}>
-              <span className="font-semibold">{stat.name}:</span> {stat.value}
-            </div>
-          ))} */}
-        </TabsContent>
+          {/* Base Stats Tab */}
+          <TabsContent
+            value="base-stats"
+            className="flex-1 space-y-3 text-sm text-gray-700 overflow-y-auto"
+          >
+            {/* Uncomment and map your base stats here */}
+            {/* {pokemon.baseStats.map((stat) => (
+              <InfoRow key={stat.name} label={stat.name} value={stat.value.toString()} />
+            ))} */}
+          </TabsContent>
 
-        <TabsContent value="evolution" className="space-y-3 text-sm text-gray-700">
-          {/* Example of rendering evolution data */}
-          <div>
-            <span className="font-semibold">Evolution:</span> {pokemon.evolution}
-          </div>
-        </TabsContent>
+          {/* Evolution Tab */}
+          <TabsContent
+            value="evolution"
+            className="flex-1 space-y-3 text-sm text-gray-700 overflow-y-auto"
+          >
+            <InfoRow label="Evolution" value={pokemon.evolution} />
+          </TabsContent>
 
-        <TabsContent value="moves" className="space-y-3 text-sm text-gray-700">
-          {/* Example of rendering moves */}
-          {/* {pokemon.moves.map((move) => (
-            <div key={move}>{move}</div>
-          ))} */}
-        </TabsContent>
-      </Tabs>
+          {/* Moves Tab */}
+          <TabsContent
+            value="moves"
+            className="flex-1 space-y-2 text-sm text-gray-700 overflow-y-auto"
+          >
+            {/* Uncomment and map your moves here */}
+            {/* {pokemon.moves.map((move) => (
+              <span key={move} className="block">
+                {move}
+              </span>
+            ))} */}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
 
-// Utility to capitalize tab names
+// Capitalizes tab names like 'base-stats' → 'Base Stats'
 function capitalizeTabName(tabName: string) {
   return tabName
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+}
+
+// Simple reusable row component
+function InfoRow({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="flex items-center justify-between pb-2">
+      <span className="font-medium text-gray-500">{label}</span>
+      <span className="text-gray-800">{value}</span>
+    </div>
+  );
 }
