@@ -7,6 +7,7 @@ import * as React from 'react';
 import MainLayout from '@/component/layout/main-layout';
 import { getPokemonTypeClass } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import ErrorNotFound from '@/component/misc/error-not-found';
 
 interface PageProps {
   params: Promise<{
@@ -31,7 +32,15 @@ export default function Page({ params }: PageProps) {
   }
 
   if (error) {
-    return <div>Error loading Pokémon details!</div>;
+    return (
+      <ErrorNotFound
+        message={
+          <>
+            We couldn’t load this Pokémon’s details. Maybe it used <strong>Teleport</strong>?
+          </>
+        }
+      />
+    );
   }
 
   const handleClick = () => {

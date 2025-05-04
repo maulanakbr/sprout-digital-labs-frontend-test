@@ -62,7 +62,7 @@ const pokemonDetailsApi = createApi({
             })),
             abilities: detailsJson.abilities.map((ability) => ability.ability?.name as string),
             genderRatio,
-            species: speciesData.evolvesFromSpecies.name,
+            species: speciesData.evolvesFromSpecies ? speciesData.evolvesFromSpecies.name : '',
             eggGroups: speciesData.eggGroups.map((egg) => egg.name),
             eggCycle: speciesData.habitat.name,
             evolution: 'Evolves from Charmander',

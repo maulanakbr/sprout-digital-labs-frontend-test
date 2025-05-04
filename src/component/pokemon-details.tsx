@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import Icon from './icon';
 import * as React from 'react';
+import { PokemonDetailsAboutSkeleton } from './skeleton/pokemon-details-about-skeleton';
 
 interface PokemonDetailsProps {
   pokemon: PokemonDetails;
@@ -82,38 +83,44 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
             value="about"
             className="flex-1 space-y-4 text-sm text-gray-700 overflow-y-auto"
           >
-            <InfoRow label="Species" value={capitalizeFirstLetter(pokemon.species ?? '')} />
-            <InfoRow label="Height" value={formatHeight(pokemon.height)} />
-            <InfoRow label="Weight" value={pokemonWeight} />
-            <InfoRow
-              label="Abilities"
-              value={pokemon.abilities.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
-            />
-            <h2 className="mt-8 text-lg font-bold">Breeding</h2>
-            <InfoRow
-              label="Gender"
-              value={
-                pokemon.genderRatio ? (
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center gap-1">
-                      <Icon variants="male" size={16} className="text-blue-600" />
-                      {pokemon.genderRatio.male}%
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Icon variants="female" size={16} className="text-pink-600" />
-                      {pokemon.genderRatio.female}%
-                    </span>
-                  </div>
-                ) : (
-                  'Genderless'
-                )
-              }
-            />
-            <InfoRow
-              label="Egg Groups"
-              value={pokemon.eggGroups?.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
-            />
-            <InfoRow label="Egg Cycle" value={capitalizeFirstLetter(pokemon.eggCycle ?? '')} />
+            {!pokemon ? (
+              <PokemonDetailsAboutSkeleton />
+            ) : (
+              <>
+                <InfoRow label="Species" value={capitalizeFirstLetter(pokemon.species || '')} />
+                <InfoRow label="Height" value={formatHeight(pokemon.height)} />
+                <InfoRow label="Weight" value={pokemonWeight} />
+                <InfoRow
+                  label="Abilities"
+                  value={pokemon.abilities.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
+                />
+                <h2 className="mt-8 text-lg font-bold">Breeding</h2>
+                <InfoRow
+                  label="Gender"
+                  value={
+                    pokemon.genderRatio ? (
+                      <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-1">
+                          <Icon variants="male" size={16} className="text-blue-600" />
+                          {pokemon.genderRatio.male}%
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Icon variants="female" size={16} className="text-pink-600" />
+                          {pokemon.genderRatio.female}%
+                        </span>
+                      </div>
+                    ) : (
+                      'Genderless'
+                    )
+                  }
+                />
+                <InfoRow
+                  label="Egg Groups"
+                  value={pokemon.eggGroups?.map((p) => capitalizeFirstLetter(p ?? '')).join(', ')}
+                />
+                <InfoRow label="Egg Cycle" value={capitalizeFirstLetter(pokemon.eggCycle ?? '')} />
+              </>
+            )}
           </TabsContent>
           {/* Base Stats Tab */}
           <TabsContent

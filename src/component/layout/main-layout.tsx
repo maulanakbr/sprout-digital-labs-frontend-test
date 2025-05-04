@@ -29,14 +29,14 @@ export default function MainLayout({
           variant="ghost"
           rightIcon="arrow-left"
           rightIconSize={32}
-          className={cn('p-0 hover:p-4 cursor-pointer', buttonClassName)}
+          className={cn('p-0 hover:bg-transparent cursor-pointer', buttonClassName)}
           onClick={typeof handleClick === 'function' ? handleClick : undefined}
         />
         <Button
           variant="ghost"
           rightIcon="menu"
           rightIconSize={32}
-          className={cn('p-0 hover:p-4 cursor-pointer', buttonClassName)}
+          className={cn('p-0 hover:bg-transparent cursor-pointer', buttonClassName)}
         />
       </header>
       <main className={cn('flex-1 max-w-screen-md mx-auto w-full', mainClassName)}>{children}</main>
