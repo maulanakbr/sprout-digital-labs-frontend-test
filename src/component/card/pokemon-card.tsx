@@ -1,6 +1,9 @@
+'use client';
+
 import type { PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PokemonCardProps {
   pokemon: PokemonListWithDetails;
@@ -23,16 +26,14 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
     return 'bg-white';
   }
 
-  const handleClick = () => {};
-
   return (
-    <div
-      key={pokemon.id}
+    <Link
       className={cn(
         'p-6 rounded-2xl shadow-md flex items-center justify-between gap-6 transition-transform hover:scale-[1.01]',
         getPokemonTypeClass(pokemon.types)
       )}
-      onClick={handleClick}
+      href={`/pokemon/${pokemon.name}`}
+      passHref
     >
       <div className="flex flex-col gap-2 max-w-sm">
         <h3 className="text-xl text-white font-bold capitalize">{pokemon.name}</h3>
@@ -58,6 +59,6 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
           />
         </div>
       )}
-    </div>
+    </Link>
   );
 }

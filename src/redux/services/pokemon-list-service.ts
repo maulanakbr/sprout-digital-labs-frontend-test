@@ -1,6 +1,9 @@
 import { apiBaseQuery } from '@/lib/api';
 import type { BaseRequest } from '@/lib/schemas/base-schema';
-import { pokemonDetailSchema } from '@/lib/schemas/pokemon-details-schema';
+import {
+  pokemonDetailsFromApiSchema,
+  pokemonDetailsSchema,
+} from '@/lib/schemas/pokemon-details-schema';
 import { pokemonListSchema, type PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
 import { transformResponse } from '@/lib/utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -32,7 +35,7 @@ const pokemonListApi = createApi({
             const detailRes = await fetch(pokemon.url);
             const detailJson = transformResponse(await detailRes.json());
 
-            const parsedDetail = pokemonDetailSchema.safeParse(detailJson);
+            const parsedDetail = pokemonDetailsFromApiSchema.safeParse(detailJson);
             if (!parsedDetail.success) {
               return null;
             }
