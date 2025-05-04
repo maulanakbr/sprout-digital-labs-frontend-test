@@ -6,6 +6,9 @@ import { useGetPokemonListQuery } from '@/redux/services/pokemon-list-service';
 import { useInfiniteScroll } from '@/hooks/use-infinite-scroll';
 import { appendPokemons } from '@/redux/slices/pokemon-list-slice';
 import type { RootState } from '@/redux/store';
+import PokemonCard from '@/component/card/pokemon-card';
+import PokemonCardSkeleton from '@/component/skeleton/pokemon-card-skeleton';
+import LoadingSpinner from '@/component/misc/loading-spinner';
 
 const LIMIT = 20;
 
@@ -14,7 +17,7 @@ export default function PokemonList() {
   const pokemons = useSelector((state: RootState) => state.pokemonList.pokemons);
   const [offset, setOffset] = React.useState(0);
 
-  const { data, isFetching, error } = useGetPokemonListQuery({ limit: LIMIT, offset });
+  const { data, isFetching, isLoading, error } = useGetPokemonListQuery({ limit: LIMIT, offset });
 
   const loadMore = React.useCallback(() => {
     setOffset((prev) => prev + LIMIT);
@@ -29,29 +32,30 @@ export default function PokemonList() {
     }
   }, [data, dispatch, done]);
 
-  if (error) return <div>Error loading Pokémon</div>;
+  if (error) return <div className="text-red-500">Error loading Pokémon</div>;
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      {pokemons.map((pokemon) => (
-        <div key={pokemon.id} className="p-4 rounded shadow bg-white">
-          <img
-            src={pokemon.image ?? ''}
-            alt={pokemon.name}
-            className="w-full h-32 object-contain"
-          />
-          <h3 className="text-lg font-semibold capitalize">{pokemon.name}</h3>
-          <div className="flex gap-2 mt-1">
-            {pokemon.types.map((type) => (
-              <span key={type} className="text-sm px-2 py-0.5 rounded bg-gray-200 text-gray-800">
-                {type}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))}
+      {isLoading && (
+        <>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <PokemonCardSkeleton key={i} />
+          ))}
+        </>
+      )}
+
+      {!isLoading && pokemons.length > 0 && <PokemonCard pokemons={pokemons} />}
+
+      {!isLoading && pokemons.length === 0 && (
+        <div className="col-span-2 text-center text-gray-500">No Pokémon found.</div>
+      )}
+
       <div ref={observerRef} className="col-span-2 text-center py-6">
-        {isFetching ? 'Loading more...' : 'Scroll to load more'}
+        {isFetching && !isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <span className="text-sm text-gray-500">Scroll to load more</span>
+        )}
       </div>
     </div>
   );
