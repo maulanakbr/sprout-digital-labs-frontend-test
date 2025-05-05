@@ -2,6 +2,8 @@
 
 A Frontend project for Sprout Digital Labs' test challenge, which involves building a web application that interacts with the PokeAPI. This project utilizes modern tools such as TypeScript and Next.js for development.
 
+**Live Demo:** https://sprout-digital-labs-frontend-test.vercel.app/
+
 ## Project Setup
 
 ### Requirements:
