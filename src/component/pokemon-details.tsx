@@ -77,6 +77,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
                 alt={pokemon.name}
                 fill
                 className="object-contain drop-shadow-xl"
+                priority
               />
             </div>
           </div>

@@ -10,6 +10,7 @@ import PokemonCard from '@/component/card/pokemon-card';
 import PokemonCardSkeleton from '@/component/skeleton/pokemon-card-skeleton';
 import LoadingSpinner from '@/component/misc/loading-spinner';
 import MainLayout from '@/component/layout/main-layout';
+import ErrorNotFound from '@/component/misc/error-not-found';
 
 const LIMIT = 20;
 
@@ -33,7 +34,9 @@ export default function Page() {
     }
   }, [data, dispatch, done]);
 
-  if (error) return <div className="text-red-500">Error loading Pokémon</div>;
+  if (error) return <ErrorNotFound message="Error loading Pokémon" />;
+
+  console.log(error);
 
   return (
     <MainLayout mainClassName="p-4">

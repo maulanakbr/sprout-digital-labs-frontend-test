@@ -40,6 +40,7 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
             fill
             className="object-contain"
             sizes="112px"
+            priority
           />
         </div>
       )}
