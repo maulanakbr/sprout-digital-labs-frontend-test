@@ -1,6 +1,9 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import type { MouseEventHandler } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -17,11 +20,14 @@ export default function MainLayout({
   buttonClassName,
   handleClick,
 }: MainLayoutProps) {
+  const path = usePathname();
+
   return (
     <div className="flex flex-col min-h-screen">
       <header
         className={cn(
           'py-4 flex justify-between items-center px-4 max-w-screen-md mx-auto w-full',
+          path === '/' && 'justify-end',
           headerClassName
         )}
       >
@@ -29,7 +35,11 @@ export default function MainLayout({
           variant="ghost"
           rightIcon="arrow-left"
           rightIconSize={32}
-          className={cn('p-0 hover:bg-transparent cursor-pointer', buttonClassName)}
+          className={cn(
+            'p-0 hover:bg-transparent cursor-pointer',
+            path === '/' && 'hidden',
+            buttonClassName
+          )}
           onClick={typeof handleClick === 'function' ? handleClick : undefined}
         />
         <Button

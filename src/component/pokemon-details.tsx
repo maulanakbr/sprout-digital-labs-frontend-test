@@ -167,7 +167,6 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           >
             <ContentNotAvailable />
           </TabsContent>
-          {/* Moves Tab */}
           <TabsContent
             value="moves"
             className="flex-1 space-y-2 text-sm text-gray-700 overflow-y-auto"
