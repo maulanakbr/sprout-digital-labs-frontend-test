@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       rightIcon,
       rightIconClassName,
-      rightIconSize,
+      rightIconSize = 32,
       asChild = false,
       isLoading = false,
       children,
@@ -75,7 +75,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               <Icon
                 variants={rightIcon}
                 className={cn(children && 'ml-3', rightIconClassName)}
-                size={32}
+                size={rightIconSize}
               />
             )}
           </>

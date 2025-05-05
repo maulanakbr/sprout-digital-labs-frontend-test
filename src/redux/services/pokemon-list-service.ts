@@ -1,9 +1,6 @@
 import { apiBaseQuery } from '@/lib/api';
 import type { BaseRequest } from '@/lib/schemas/base-schema';
-import {
-  pokemonDetailsFromApiSchema,
-  pokemonDetailsSchema,
-} from '@/lib/schemas/pokemon-details-schema';
+import { pokemonDetailsFromApiSchema } from '@/lib/schemas/pokemon-details-schema';
 import { pokemonListSchema, type PokemonListWithDetails } from '@/lib/schemas/pokemon-list-schema';
 import { transformResponse } from '@/lib/utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
