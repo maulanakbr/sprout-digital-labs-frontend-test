@@ -10,7 +10,6 @@ import PokemonCard from '@/component/card/pokemon-card';
 import PokemonCardSkeleton from '@/component/skeleton/pokemon-card-skeleton';
 import LoadingSpinner from '@/component/misc/loading-spinner';
 import MainLayout from '@/component/layout/main-layout';
-import ErrorNotFound from '@/component/misc/error-not-found';
 
 const LIMIT = 20;
 
@@ -19,7 +18,7 @@ export default function Page() {
   const pokemons = useSelector((state: RootState) => state.pokemonList.pokemons);
   const [offset, setOffset] = React.useState(0);
 
-  const { data, isFetching, isLoading, error } = useGetPokemonListQuery({ limit: LIMIT, offset });
+  const { data, isFetching, isLoading } = useGetPokemonListQuery({ limit: LIMIT, offset });
 
   const loadMore = React.useCallback(() => {
     setOffset((prev) => prev + LIMIT);
@@ -34,9 +33,7 @@ export default function Page() {
     }
   }, [data, dispatch, done]);
 
-  if (error) return <ErrorNotFound message="Error loading Pokémon" />;
-
-  console.log(error);
+  // if (error) return <ErrorNotFound message="Error loading Pokémon" />;
 
   return (
     <MainLayout mainClassName="p-4">
