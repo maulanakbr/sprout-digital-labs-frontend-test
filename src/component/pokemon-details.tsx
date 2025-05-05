@@ -37,7 +37,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
         <div className="absolute right-0 bottom-0">
           <Image
             src="/pokemon.svg"
-            alt={pokemon.name}
+            alt="pokemon.svg"
             width={375}
             height={375}
             className="object-contain drop-shadow-xl invert opacity-30"
@@ -46,7 +46,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
         <div className="absolute left-20 top-30">
           <Image
             src="/dot-grid.svg"
-            alt={pokemon.name}
+            alt="dot-grid.svg"
             width={225}
             height={225}
             className="object-contain drop-shadow-xl invert opacity-30"

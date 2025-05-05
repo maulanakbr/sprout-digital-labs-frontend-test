@@ -34,6 +34,15 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
       </div>
       {pokemon.image && (
         <div className="flex-shrink-0 w-28 h-28 relative">
+          <div className="absolute inset-0">
+            <Image
+              src="/pokemon.svg"
+              alt="pokemon.svg"
+              width={375}
+              height={375}
+              className="object-contain drop-shadow-xl invert opacity-30"
+            />
+          </div>
           <Image
             src={pokemon.image}
             alt={pokemon.name}
