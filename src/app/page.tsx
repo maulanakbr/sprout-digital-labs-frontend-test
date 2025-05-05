@@ -34,9 +34,9 @@ export default function Page() {
   }, [data, dispatch, done]);
 
   return (
-    <MainLayout mainClassName="p-4">
-      <h2 className="mb-4 text-4xl font-bold">Pokedex</h2>
-      <div className="grid grid-cols-2 gap-10">
+    <MainLayout mainClassName="p-4 sm:p-6 lg:p-10">
+      <h2 className="mb-6 text-3xl sm:text-4xl font-bold">Pokedex</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {isLoading && pokemons.length === 0 && (
           <>
             {Array.from({ length: 8 }).map((_, i) => (
@@ -44,15 +44,12 @@ export default function Page() {
             ))}
           </>
         )}
-
         {pokemons.length > 0 &&
           pokemons.map((pokemon) => <PokemonCard pokemon={pokemon} key={pokemon.name} />)}
-
         {!isLoading && pokemons.length === 0 && (
-          <div className="col-span-2 text-center text-gray-500">No Pokémon found.</div>
+          <div className="col-span-full text-center text-gray-500">No Pokémon found.</div>
         )}
-
-        <div ref={observerRef} className="col-span-2 text-center py-6">
+        <div ref={observerRef} className="col-span-full text-center py-6">
           {isFetching && !isLoading ? (
             <LoadingSpinner />
           ) : (
