@@ -33,8 +33,6 @@ export default function Page() {
     }
   }, [data, dispatch, done]);
 
-  // if (error) return <ErrorNotFound message="Error loading Pokémon" />;
-
   return (
     <MainLayout mainClassName="p-4">
       <h2 className="mb-4 text-4xl font-bold">Pokedex</h2>

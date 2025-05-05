@@ -27,7 +27,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
   const pokemonWeight = `${(pokemon.weight * 0.1 * 2.20462).toFixed(1)} lbs (${(pokemon.weight * 0.1).toFixed(1)} kg)`;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-slate-50 to-slate-100 mb-4 rounded-xl shadow-md">
       <div
         className={cn(
           'relative pt-10 pb-6 px-6 rounded-b-3xl shadow-md',
@@ -86,7 +86,7 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
       <div className="flex-1 flex flex-col">
         <Tabs
           defaultValue="about"
-          className="relative z-10 flex-1 shadow-md flex flex-col bg-white rounded-t-3xl -mt-24 px-6 py-16"
+          className="relative z-10 flex-1 rounded-2xl flex flex-col bg-white rounded-t-3xl -mt-24 px-6 py-16"
         >
           <TabsList className="w-full flex justify-between border-b border-gray-200">
             {['about', 'base-stats', 'evolution', 'moves'].map((tab) => (
