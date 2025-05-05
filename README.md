@@ -1,6 +1,6 @@
 # Sprout Digital Labs Frontend Test
 
-A Frontend project for Sprout Digital Labs' test challenge, which involves building a web application that interacts with the PokeAPI. This project utilizes modern tools such as TypeScript, Next.js for development.
+A Frontend project for Sprout Digital Labs' test challenge, which involves building a web application that interacts with the PokeAPI. This project utilizes modern tools such as TypeScript and Next.js for development.
 
 ## Project Setup
 
