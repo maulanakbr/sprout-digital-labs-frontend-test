@@ -34,6 +34,24 @@ export default function PokemonDetails({ pokemon }: PokemonDetailsProps) {
           getPokemonTypeClass(pokemon.types)
         )}
       >
+        <div className="absolute right-0 bottom-0">
+          <Image
+            src="/pokemon.svg"
+            alt={pokemon.name}
+            width={375}
+            height={375}
+            className="object-contain drop-shadow-xl invert opacity-30"
+          />
+        </div>
+        <div className="absolute left-20 top-30">
+          <Image
+            src="/dot-grid.svg"
+            alt={pokemon.name}
+            width={225}
+            height={225}
+            className="object-contain drop-shadow-xl invert opacity-30"
+          />
+        </div>
         <div className="flex justify-between items-start">
           <h1 className="text-4xl font-bold text-white capitalize">{pokemon.name}</h1>
           <span className="text-white text-xl font-semibold">
